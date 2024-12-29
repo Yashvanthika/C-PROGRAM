@@ -1,0 +1,40 @@
+#include <stdio.h>
+struct Process { int bt, prio, rem, tat, wt; };
+
+int main() {
+    int n, time = 0, completed = 0, max_prio, idx;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+    struct Process p[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("Process %d - BT, Priority: ", i + 1);
+        scanf("%d %d", &p[i].bt, &p[i].prio);
+        p[i].rem = p[i].bt;
+    }
+
+    while (completed < n) {
+        max_prio = -999;  // Start with the smallest possible priority
+        idx = -1;
+        for (int i = 0; i < n; i++)
+            if (p[i].rem > 0 && p[i].prio > max_prio) { // Find the highest priority
+                max_prio = p[i].prio;
+                idx = i;
+            }
+
+        if (idx != -1) {
+            p[idx].rem--;
+            if (p[idx].rem == 0) {
+                p[idx].tat = ++time;
+                p[idx].wt = p[idx].tat - p[idx].bt;
+                completed++;
+            } else time++;
+        }
+    }
+
+    printf("\nBT\tPrio\tWT\tTAT\n");
+    for (int i = 0; i < n; i++)
+        printf("%d\t%d\t%d\t%d\n", p[i].bt, p[i].prio, p[i].wt, p[i].tat);
+
+    return 0;
+}
