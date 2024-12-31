@@ -1,43 +1,47 @@
-#include <stdio.h>
-int main() 
+#include<stdio.h>
+int main()
 {
-    int n, frames, pages[100], frame[10], front = 0, faults = 0, hits = 0;
-    printf("Enter number of pages and frames: ");
-    scanf("%d %d", &n, &frames);
-    printf("Enter page reference string: ");
-    for (int i = 0; i < n; i++) 
-        scanf("%d", &pages[i]);
-    for (int i = 0; i < frames; i++) 
-        frame[i] = -1;
-    for (int i = 0; i < n; i++) 
+	int n,f,page[100],frame[10],front=0,fault=0,hit=0,i,j;
+	printf("Enter size of page and size of frame : ");
+	scanf("%d %d",&n,&f);
+	printf("Enter the page reference string : ");
+	for(i=0;i<n;i++)
 	{
-        int found = 0;
-        for (int j = 0; j < frames; j++) 
+		scanf("%d",&page[i]);		
+	}
+	for(i=0;i<f;i++)
+	{
+		frame[i]=-1;
+	}
+	for(i=0;i<n;i++)
+	{
+		int found=0;
+		for(j=0;j<f;j++)
 		{
-            if (frame[j] == pages[i]) 
+			if(frame[j]==page[i])
 			{
-                found = 1; 
-                hits++;
-                break;
-            }
-        }
-        if (!found) 
-		{  
-            frame[front] = pages[i];  
-            front = (front + 1) % frames;  
-            faults++;
-        }
-        printf("Frames: ");
-        for (int j = 0; j < frames; j++) 
+				found=1;
+				hit++;
+				break;
+			}
+		}
+		if(!found)
 		{
-            if (frame[j] == -1)
-                printf("- ");
-            else
-                printf("%d ", frame[j]);
-        }
-        printf("\n");
-    }
-    printf("Total page faults: %d\n", faults);
-    printf("Total page hits: %d\n", hits);
-    return 0;
+			frame[front]=page[i];
+			front=(front+1)%f;
+			fault++;
+		}
+		printf("\nFrames : ");
+		for(j=0;j<f;j++)
+		{
+			if(frame[j]==-1)
+			printf("- ");
+			else
+			printf("%d ",frame[j]);
+		}
+	}
+	printf("\nTotal no of page faults is : %d",fault);
+	printf("\nTotal no of page hits is : %d",hit);
+	return 0;
+	
 }
