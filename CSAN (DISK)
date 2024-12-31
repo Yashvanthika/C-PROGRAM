@@ -1,46 +1,45 @@
-#include <stdio.h>
-#include <stdlib.h>
-int cmp(const void *a, const void *b) 
+#include<stdio.h>
+#include<stdlib.h>
+int cmp(const void *a,const void *b)
 {
-    return (*(int *)a - *(int *)b);
+	return(*(int *)a-*(int *)b);
 }
-void cscan(int requests[], int n, int head, int disk_size) 
+void cscan(int request[],int n,int head,int disk_size)
 {
-    int total_movement = 0;
-    requests[n] = head;
-    requests[n + 1] = 0;              
-    requests[n + 2] = disk_size - 1;  
-    n += 3;
-    qsort(requests, n, sizeof(int), cmp);
-    int head_pos = -1;
-    for (int i = 0; i < n; i++) 
+	int tom=0,i;
+	request[n]=head;
+	request[n+1]=0;
+	request[n+2]=disk_size-1;
+	n+=3;
+	qsort(request,n,sizeof(int),cmp);
+	int head_pos=-1;
+	for(i=0;i<n;i++)
 	{
-        if (requests[i] == head) 
+		if(request[i]==head)
 		{
-            head_pos = i;
-            break;
-        }
-    }
-    for (int i = head_pos; i < n; i++) 
+			head_pos=i;
+			break;
+		}
+	}
+	for(i=head_pos;i<n;i++)
 	{
-        total_movement += abs(requests[i] - head);
-        head = requests[i];
-    }
-    total_movement += abs(disk_size - 1 - 0);
-    head = 0;
-	for (int i = 0; i < head_pos; i++) 
+		tom+=abs(request[i]-head);
+		head=request[i];
+	}
+	tom+=abs(disk_size-1-0);
+	head=0;
+	for(i=0;i<head_pos;i++)
 	{
-        total_movement += abs(requests[i] - head);
-        head = requests[i];
-    }
-    printf("Total head movement: %d\n", total_movement);
+		tom+=abs(request[i]-head);
+		head=request[i];
+	}
+	printf("\nTotal overhead Movement is %d",tom);
 }
-int main() 
+int main()
 {
-    int n = 8, head = 100, disk_size = 201;
-    int requests[] = {30, 85, 90, 100, 105, 110, 135, 145};
-    printf("C-SCAN Disk Scheduling Algorithm\n");
-    printf("Initial head position: %d\n", head);
-    cscan(requests, n, head, disk_size);
-    return 0;
+	int n=8,head=100,disk_size=201;
+	int request[]={30,85,90,100,105,110,135,145};
+	printf("Initial head position : %d",head);
+	cscan(request,n,head,disk_size);
+	return 0;
 }
