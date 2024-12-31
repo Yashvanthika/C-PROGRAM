@@ -1,63 +1,61 @@
-#include <stdio.h>
-#include <stdlib.h>
-int cmp(const void *a, const void *b) 
+#include<stdio.h>
+#include<stdlib.h>
+int cmp(const void *a,const void *b)
 {
-    return (*(int *)a - *(int *)b);
+	return(*(int *)a-*(int *)b);
 }
-void scan(int requests[], int n, int head, int disk_size, int direction) 
+void scan(int request[],int n,int head,int disk_size,int direction)
 {
-    int total_movement = 0, i;
-    requests[n] = head;
-    n++;
-    qsort(requests, n, sizeof(int), cmp);
-    int head_pos = -1;
-    for (i = 0; i < n; i++) 
+	int tom=0,i;
+	request[n]=head;
+	n++;
+	qsort(request,n,sizeof(int),cmp);
+	int head_pos=-1;
+	for(i=0;i<n;i++)
 	{
-        if (requests[i] == head) 
+		if(request[i]==head)
 		{
-            head_pos = i;
-            break;
-        }
-    }
-
-    if (direction == 0) 
+			head_pos=i;
+			break;			
+		}
+	}
+	if(direction==0)
 	{
-        for (i = head_pos; i >= 0; i--) 
+		for(i=head_pos;i>=0;i--)
 		{
-            total_movement += abs(requests[i] - head);
-            head = requests[i];
-        }
-        total_movement += abs(head); 
-        head = 0;
-        for (i = head_pos + 1; i < n; i++) 
+			tom+=abs(request[i]-head);
+			head=request[i];
+		}
+		tom+=abs(head);
+		head=0;
+		for(i=head_pos+1;i<n;i++)
 		{
-            total_movement += abs(requests[i] - head);
-            head = requests[i];
-        }
-    } 
-	else 
+			tom+=abs(request[i]-head);
+			head=request[i];
+		}
+	}
+	else
 	{
-        for (i = head_pos; i < n; i++) 
+		for(i=head_pos;i<n;i++)
 		{
-            total_movement += abs(requests[i] - head);
-            head = requests[i];
-        }
-        total_movement += abs(disk_size - 1 - head); 
-        head = disk_size - 1;
-        for (i = head_pos - 1; i >= 0; i--) 
+			tom+=abs(request[i]-head);
+			head=request[i];
+		}
+		tom+=abs(disk_size-1-head);
+		head=disk_size-1;
+		for(i=head_pos-1;i>=0;i--)
 		{
-            total_movement += abs(requests[i] - head);
-            head = requests[i];
-        }
-    }
-    printf("Total head movement: %d\n", total_movement);
+			tom+=abs(request[i]-head);
+			head=request[i];
+		}
+	}
+	printf("\nTotal Overhead Movement is : %d",tom);
 }
-int main() 
+int main()
 {
-    int n = 8, head = 100, disk_size = 201, direction = 200;
-    int requests[] = {30,85,90,100,105,110,135,145};
-    printf("SCAN Disk Scheduling Algorithm\n");
-    printf("Initial head position: %d\n", head);
-    scan(requests, n, head, disk_size, direction);
-    return 0;
+	int n=8,head=100,disk_size=201,direction=200;
+	int request[]={30,85,90,100,105,110,135,145};
+	printf("Initial head position is : %d",head);
+	scan(request,n,head,disk_size,direction);
+	return 0;
 }
